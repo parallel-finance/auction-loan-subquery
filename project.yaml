@@ -1,6 +1,6 @@
 specVersion: 0.0.1
 description: The project for getting the on chain data of Kusama
-repository: "https://github.com/parallel-finance/auction-subquery"
+repository: "https://github.com/parallel-finance/auction-loan-subquery"
 schema: ./schema.graphql
 network:
   # endpoint: wss://regnet-relay-rpc.parallel.fi

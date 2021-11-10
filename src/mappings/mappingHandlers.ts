@@ -3,7 +3,10 @@ import { DotContribution } from "../types";
 import type { Extrinsic } from "@polkadot/types/interfaces";
 import type { Vec, Result, Null, Option } from "@polkadot/types";
 
-const MULTISIG_ADDR = "13wNbioJt44NKrcQ5ZUrshJqP7TKzQbzZt5nhkeL4joa3PAX";
+const MULTISIG_ADDR = [
+  "13wNbioJt44NKrcQ5ZUrshJqP7TKzQbzZt5nhkeL4joa3PAX",
+  "12of6J5x9TyCo1qFn96ZFBqKTZd3Su6Ugy6qZbfRfyv3ktSU",
+];
 const PROXY_ADDR = "13vj58X9YtGCRBFHrcxP6GCkBu81ALcqexiwySx18ygqAUw";
 // const MULTISIG_ADDR = "EF9xmEeFv3nNVM3HyLAMTV5TU8jua5FRXCE116yfbbrZbCL";
 
@@ -20,7 +23,7 @@ const checkTransaction = (sectionFilter: string, methodFilter: string, call: Ext
 const checkTransactionInsideProxy = (sectionFilter: string, methodFilter: string, call: Extrinsic) => {
   if (!checkTransaction("proxy", "proxy", call)) return false;
   const addr = call.args[0].toString();
-  if (addr !== MULTISIG_ADDR) {
+  if (!MULTISIG_ADDR.includes(addr)) {
     logger.debug("Found proxy address: " + addr + ", expected: " + MULTISIG_ADDR);
     return false;
   }
@@ -46,7 +49,7 @@ const handleDotContribution = async (extrinsic: SubstrateExtrinsic) => {
     },
   ] = calls.toArray();
 
-  if (addressRaw.toString() !== MULTISIG_ADDR) {
+  if (!MULTISIG_ADDR.includes(addressRaw.toString())) {
     return;
   }
 
